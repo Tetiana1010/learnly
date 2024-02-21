@@ -23,7 +23,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input"
+import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { CirclePlus } from "lucide-react";
 interface DataTableProps<TData, TValue> {
@@ -67,10 +67,10 @@ export function DataTable<TData, TValue>({
           className="max-w-sm"
         />
         <Link href="/teacher/create">
-        <Button>
-          <CirclePlus className="h-4 w-4 mr-2" />
-          New Course
-        </Button>
+          <Button>
+            <CirclePlus className="h-4 w-4 mr-2" />
+            New Course
+          </Button>
         </Link>
       </div>
       <div className="rounded-md border">
