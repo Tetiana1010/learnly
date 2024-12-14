@@ -7,5 +7,5 @@ export const Navbar = () => {
       <MobileSidebar />
       <NavbarRoutes />
     </div>
-  )
-}
+  );
+};

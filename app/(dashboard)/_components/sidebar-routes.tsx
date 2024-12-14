@@ -5,33 +5,30 @@ import { SidebarItem } from "./sidebar-item";
 
 const guestsRoutes = [
   {
-    icon: Layout, 
+    icon: Layout,
     label: "Dashboard",
-    href: '/'
+    href: "/",
   },
   {
-    icon: Compass, 
+    icon: Compass,
     label: "Browse",
-    href: '/search'
-  }
-]
+    href: "/search",
+  },
+];
 
 export const SidebarRoutes = () => {
   const routes = guestsRoutes;
 
   return (
     <div className="flex flex-col w-full">
-      {
-        routes.map((route) => (
-          <SidebarItem
-            key={route.href}
-            icon={route.icon}
-            label={route.label}
-            href={route.href}
-          />
-        ))
-      }
+      {routes.map((route) => (
+        <SidebarItem
+          key={route.href}
+          icon={route.icon}
+          label={route.label}
+          href={route.href}
+        />
+      ))}
     </div>
-  )
+  );
 };
-
