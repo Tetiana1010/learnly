@@ -32,7 +32,10 @@ const formSchema = z.object({
   description: z.string().min(1, { message: "Description is required" }),
 });
 
-export const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
+export const DescriptionForm = ({
+  initialData,
+  courseId,
+}: DescriptionFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const toggleEdit = () => setIsEditing((current) => !current);
@@ -53,9 +56,8 @@ export const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps)
 
       toggleEdit();
       router.refresh();
-      
     } catch {
-      toast.error("Something went wrong")
+      toast.error("Something went wrong");
     }
   };
 
@@ -74,47 +76,47 @@ export const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps)
           )}
         </Button>
       </div>
-      { !isEditing && (
-        <p className={cn("text-sm mt-2", !initialData.description && "text-slate-500")}>
+      {!isEditing && (
+        <p
+          className={cn(
+            "text-sm mt-2",
+            !initialData.description && "text-slate-500",
+          )}
+        >
           {initialData.description || "No description"}
         </p>
       )}
 
-      {
-        isEditing  && (
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="space-y-4 mt-4"
-            >
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
+      {isEditing && (
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-4 mt-4"
+          >
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
                     <Textarea
                       disabled={isSubmitting}
                       placeholder="e.g. 'This course is about"
                       {...field}
                     />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem> 
-                )}
-              />
-              <div className="flex items-center gap-x-2">
-                <Button
-                  disabled={!isValid || isSubmitting}
-                  type="submit"
-                >
-                  Save
-                </Button>
-              </div>
-            </form>
-          </Form>
-        )
-      }
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex items-center gap-x-2">
+              <Button disabled={!isValid || isSubmitting} type="submit">
+                Save
+              </Button>
+            </div>
+          </form>
+        </Form>
+      )}
     </div>
   );
 };

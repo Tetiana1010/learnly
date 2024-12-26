@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function PATCH(
   req: Request,
-  { params } : { params: { courseId: string }}
+  { params }: { params: { courseId: string } },
 ) {
   try {
     const { userId } = await auth();
@@ -13,23 +13,23 @@ export async function PATCH(
 
     console.log("courseId:", courseId);
 
-    if(!userId){
-      return new NextResponse("Unauthorized", { status: 401 })
+    if (!userId) {
+      return new NextResponse("Unauthorized", { status: 401 });
     }
 
     const course = await db.course.update({
       where: {
         id: courseId,
-        userId
+        userId,
       },
       data: {
-        ...values
-      }
+        ...values,
+      },
     });
 
     return NextResponse.json(course);
-  } catch (error){
+  } catch (error) {
     console.log("[COURSE_ID]", error);
-    return new NextResponse("Internal Error", { status: 500 })
+    return new NextResponse("Internal Error", { status: 500 });
   }
-};
+}
