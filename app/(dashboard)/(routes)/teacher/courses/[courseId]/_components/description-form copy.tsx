@@ -42,11 +42,15 @@ export const DescriptionForm = ({
 
   const router = useRouter();
 
+  const sanitizedInitialData = {
+    description: initialData.description || "",
+  };
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData,
+    defaultValues: sanitizedInitialData, // Use sanitized data here
   });
-
+  
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -80,7 +84,7 @@ export const DescriptionForm = ({
         <p
           className={cn(
             "text-sm mt-2",
-            !initialData.description && "text-slate-500",
+            !initialData.description && "text-slate-500 italic",
           )}
         >
           {initialData.description || "No description"}

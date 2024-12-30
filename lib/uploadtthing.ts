@@ -1,11 +1,4 @@
-import { generateComponents } from "uploadthing/next";
+import { OurFileRouter } from "@/app/api/uploadthing/core";
+import { generateUploadButton } from "@uploadthing/react";
 
-import { ourFileRouter } from "@/app/api/ploadthing/core";
-
-// Export routes for Next App Router
-export const { GET, POST } = createRouteHandler({
-  router: ourFileRouter,
-
-  // Apply an (optional) custom config:
-  // config: { ... },
-});
+export const UploadButton = generateUploadButton<OurFileRouter>();
