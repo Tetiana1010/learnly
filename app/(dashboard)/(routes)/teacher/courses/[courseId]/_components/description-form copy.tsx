@@ -50,7 +50,7 @@ export const DescriptionForm = ({
     resolver: zodResolver(formSchema),
     defaultValues: sanitizedInitialData, // Use sanitized data here
   });
-  
+
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
