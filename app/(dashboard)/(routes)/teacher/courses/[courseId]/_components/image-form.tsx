@@ -109,6 +109,7 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
             }}
           />
           <div>
+            16:9 ration is recommended
           </div>
             
         </div>

@@ -14,8 +14,12 @@ export const FileUpload = ({ onChange, endpoint }: FileUploadProps) => {
     <UploadDropzone
       endpoint={endpoint}
       onClientUploadComplete={(res) => {
-        onChange(res?.[0].url);
-      }}
+        if (res && res.length > 0) {
+          onChange(res[0].url);
+        } else {
+          toast.error("No file URL received!");
+        }
+      }}      
       onUploadError={(error: Error) => {
         toast.error(error.message);
       }}
