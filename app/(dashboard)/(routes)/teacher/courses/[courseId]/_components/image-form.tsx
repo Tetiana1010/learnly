@@ -100,14 +100,15 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
 
       {isEditing && (
         <div>
-          <FileUpload
+          <FileUpload /> 
+          {/* <FileUpload
             endpoint="courseImage"
             onChange={(url) => {
               if(url){
                 onSubmit({ imageUrl: url})
               }
             }}
-          />
+          /> */}
           <div>
             16:9 ration is recommended
           </div>
