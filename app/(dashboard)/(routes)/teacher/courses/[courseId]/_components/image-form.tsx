@@ -21,7 +21,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Course } from "@prisma/client";
 import Image from "next/image";
 import toast from "react-hot-toast";
-import { FileUpload } from "@/components/file-upload";
+import ImageUpload from "@/components/image-upload";
 
 interface ImageFormProps {
   initialData: Course;
@@ -100,15 +100,7 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
 
       {isEditing && (
         <div>
-          <FileUpload /> 
-          {/* <FileUpload
-            endpoint="courseImage"
-            onChange={(url) => {
-              if(url){
-                onSubmit({ imageUrl: url})
-              }
-            }}
-          /> */}
+          <ImageUpload />
           <div>
             16:9 ration is recommended
           </div>
