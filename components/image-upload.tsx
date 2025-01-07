@@ -1,45 +1,39 @@
 "use client";
 
-import { UploadButton } from "@/lib/uploadtthing";
-import Image from "next/image";
-import { useState } from "react";
+import { UploadDropzone } from "@uploadthing/react";
+import { OurFileRouter } from "@/app/api/uploadthing/core";
+import Image from "next/image"; 
 
-const ImageUpload = () => {
-  const [imageUrl, setimageUrl] = useState<string>("");
+interface ImageUploadProps {
+  onChange: (url?: string) => void;
+  value: string;
+}
+
+const ImageUpload = ({
+  onChange,
+  value
+}: ImageUploadProps) => {
   return (
-    <div>
-      <UploadButton
-        className="text-white font-bold py-2 px-4 rounded"
+    <div className="space-y-4 w-full flex flex-col items-center justify-center">
+      {value && (
+        <div className="relative w-40 h-40">
+          <Image
+            fill
+            src={value}
+            alt="Upload"
+            className="rounded-full object-cover"
+          />
+        </div>
+      )}
+      <UploadDropzone<OurFileRouter, "imageUploader">
         endpoint="imageUploader"
-        onBeforeUploadBegin={(files) => {
-          console.log(`Uploading files ${files}`)
-          return files;
-        }}
-        onUploadBegin={(name) => {
-          console.log(`Upload started for ${name}`)
-        }}
-        onUploadAborted={() => {
-          console.log("Upload aborted")
-        }}
-        onUploadProgress={(p) => {
-          console.log(`Upload progress: ${p}%`)
-        }}
         onClientUploadComplete={(res) => {
-          console.log("Files", res);
-          alert("Files uploaded");
-          setimageUrl(res[0].url);
+          onChange(res?.[0].url);
         }}
         onUploadError={(error: Error) => {
-          alert(`ERROR! ${error.message}`);
+          console.log(error);
         }}
       />
-
-      {imageUrl.length ? (
-        <div>
-          <h2>Image Preview</h2>
-          <Image src={imageUrl} alt="Uploaded Image" width={500} height={300} />
-        </div>
-      ) : 'nothing here, no image uploaded yet'}
     </div>
   );
 };

@@ -10,14 +10,12 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormMessage,
 } from "@/components/ui/form";
 
 import { Button } from "@/components/ui/button";
 import { ImageIcon, PencilIcon, PlusCircle } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Textarea } from "@/components/ui/textarea";
 import { Course } from "@prisma/client";
 import Image from "next/image";
 import toast from "react-hot-toast";
@@ -45,8 +43,6 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
       imageUrl: initialData?.imageUrl || "",
     },
   });
-
-  const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
@@ -100,11 +96,25 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
 
       {isEditing && (
         <div>
-          <ImageUpload />
-          <div>
-            16:9 ration is recommended
-          </div>
-            
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormField
+                control={form.control}
+                name="imageUrl"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <ImageUpload
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <Button type="submit">Save</Button>
+            </form>
+          </Form>
         </div>
       )}
     </div>
