@@ -10,7 +10,7 @@ export async function PATCH(
     const { userId } = await auth();
     const { courseId } = params;
     const values = await req.json();
-    console.log(`Values ${JSON.stringify(values)}`)
+    console.log(`Values ${JSON.stringify(values)}`);
 
     console.log("courseId:", courseId);
 

@@ -61,4 +61,3 @@ export default withUt({
   },
   plugins: [tailwindcssAnimate],
 });
-

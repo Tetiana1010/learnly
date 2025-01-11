@@ -4,7 +4,7 @@ const f = createUploadthing();
 
 export const ourFileRouter = {
   imageUploader: f({
-    image: { maxFileSize: "4MB" }
+    image: { maxFileSize: "4MB" },
   })
     .middleware(() => {
       return {}; // simplified for testing
@@ -12,7 +12,7 @@ export const ourFileRouter = {
     .onUploadComplete((data) => {
       console.log("Upload complete", data);
       return { url: data.file.url };
-    })
+    }),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;
