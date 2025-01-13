@@ -64,7 +64,9 @@ export const CategoryForm = ({
     }
   };
 
-  const selecedOption = options.find((option) => option.value === initialData.categoryId);
+  const selecedOption = options.find(
+    (option) => option.value === initialData.categoryId,
+  );
 
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
@@ -104,10 +106,7 @@ export const CategoryForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Combobox
-                      options={options}
-                      {...field}
-                    />
+                    <Combobox options={options} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
