@@ -36,7 +36,9 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+        <NextSSRPlugin
+          routerConfig={extractRouterConfig(ourFileRouter)}
+        />
           <ToastProvoder />
           {children}
         </body>

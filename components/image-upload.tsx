@@ -2,14 +2,17 @@
 
 import { UploadDropzone } from "@uploadthing/react";
 import { OurFileRouter } from "@/app/api/uploadthing/core";
-import Image from "next/image";
+import Image from "next/image"; 
 
 interface ImageUploadProps {
   onChange: (url?: string) => void;
   value: string;
 }
 
-const ImageUpload = ({ onChange, value }: ImageUploadProps) => {
+const ImageUpload = ({
+  onChange,
+  value
+}: ImageUploadProps) => {
   return (
     <div className="space-y-4 w-full flex flex-col items-center justify-center">
       {value && (
