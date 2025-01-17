@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Chapter, Course } from "@prisma/client";
 import { Input } from "@/components/ui/input";
+import { ChaptersList } from "./chapters-list";
 import toast from "react-hot-toast";
 
 interface ChaptersFormProps {
@@ -111,6 +112,12 @@ export const ChaptersForm = ({
         !isCreating && (
           <div className={cn("text-sm mt-2", !initialData.chapters.length && "text-slate-500 italic")}>
             {!initialData.chapters.length && "No chapters"}
+
+            <ChaptersList
+              onEdit={() => {}}
+              onReorder={() => {}}
+              items={initialData.chapters || []}
+            />
           </div>
         )
       }
