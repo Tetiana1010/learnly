@@ -18,18 +18,18 @@ const SearchPage = () => {
   return (
     <div className="min-h-screen flex flex-col items-center p-6 font-sans">
       <div className="py-20 text-center">
-        <h1 className="text-4xl font-bold mb-8 text-gray-800">Search Page</h1>
+        <h1 className="text-4xl font-bold mb-8 text-slate-800">Search Page</h1>
         <div className="w-full max-w-md bg-white p-6 rounded-lg">
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search..."
-            className="p-3 text-lg mb-4 w-full border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="p-3 text-lg mb-4 w-full border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-600"
           />
           <button
             onClick={handleSearch}
-            className="w-full p-3 text-lg bg-blue-500 text-white rounded shadow hover:bg-blue-600 transition duration-200"
+            className="w-full p-3 text-lg bg-sky-600 text-white rounded shadow hover:bg-sky-600 transition duration-200"
           >
             Search
           </button>
