@@ -32,10 +32,7 @@ const formSchema = z.object({
   title: z.string().min(1),
 });
 
-export const ChaptersForm = ({
-  initialData,
-  courseId,
-}: ChaptersFormProps) => {
+export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
   const [isCreating, setIsCreating] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -108,26 +105,27 @@ export const ChaptersForm = ({
           </form>
         </Form>
       )}
-      {
-        !isCreating && (
-          <div className={cn("text-sm mt-2", !initialData.chapters.length && "text-slate-500 italic")}>
-            {!initialData.chapters.length && "No chapters"}
+      {!isCreating && (
+        <div
+          className={cn(
+            "text-sm mt-2",
+            !initialData.chapters.length && "text-slate-500 italic",
+          )}
+        >
+          {!initialData.chapters.length && "No chapters"}
 
-            <ChaptersList
-              onEdit={() => {}}
-              onReorder={() => {}}
-              items={initialData.chapters || []}
-            />
-          </div>
-        )
-      }
-      {
-        !isCreating && (
-          <p className="text-sx text-muted-foreground mt-4">
-            Drag and drop to reorder chapters
-          </p>
-        )
-      }
+          <ChaptersList
+            onEdit={() => {}}
+            onReorder={() => {}}
+            items={initialData.chapters || []}
+          />
+        </div>
+      )}
+      {!isCreating && (
+        <p className="text-sx text-muted-foreground mt-4">
+          Drag and drop to reorder chapters
+        </p>
+      )}
     </div>
   );
 };
