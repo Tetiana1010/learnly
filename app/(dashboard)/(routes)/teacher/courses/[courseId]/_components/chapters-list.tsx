@@ -1,7 +1,7 @@
 "use client";
 
 import { Chapter } from "@prisma/client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   DragDropContext,
   Droppable,
@@ -43,7 +43,7 @@ export const ChaptersList = ({
       <Droppable droppableId="chapters">
         {(provided) => (
           <div {...provided.droppableProps} ref={provided.innerRef}>
-            {chapters.map((chapter, index) => {
+            {chapters.map((chapter, index) => (
               <Draggable
                 key={chapter.id}
                 draggableId={chapter.id}
@@ -74,8 +74,8 @@ export const ChaptersList = ({
                       {chapter.isFree && <Badge>Free</Badge>}
                       <Badge
                         className={cn(
-                          "bg-slate-500",
-                          chapter.isPublished && "bg-sky-700",
+                          "text-slate-500",
+                          chapter.isPublished && "text-sky-700",
                         )}
                       >
                         {chapter.isPublished ? "Published" : "Draft"}
@@ -87,9 +87,9 @@ export const ChaptersList = ({
                     </div>
                   </div>
                 )}
-                {provided.placeholder}
-              </Draggable>;
-            })}
+              </Draggable>
+            ))}
+            {provided.placeholder}
           </div>
         )}
       </Droppable>
