@@ -37,25 +37,21 @@ export const ChaptersList = ({
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
-
-    const items = Array.from(chapters);
-    const [reorderedItems] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItems);
-
-    const startInxed = Math.min(result.source.index, result.destination.index);
-    const endIndex = Math.max(result.source.index, result.destination.index);
-
-    const updatedChapters = items.slice(startInxed, endIndex + 1);
-
-    setChapters(items);
-
-    const bulkUpdateData = updatedChapters.map((chapter) => ({
+  
+    const reorderedChapters = [...chapters];
+    const [movedItem] = reorderedChapters.splice(result.source.index, 1);
+    reorderedChapters.splice(result.destination.index, 0, movedItem);
+  
+    setChapters(reorderedChapters);
+  
+    const bulkUpdateData = reorderedChapters.map((chapter, index) => ({
       id: chapter.id,
-      position: items.findIndex((item) => item.id === chapter.id),
+      position: index,
     }));
-
+  
     onReorder(bulkUpdateData);
   };
+  
 
   if (!isMounted) {
     return null;
@@ -80,6 +76,7 @@ export const ChaptersList = ({
                         "bg-sky-100 border-sky-200 text-sky-700",
                     )}
                     ref={provided.innerRef}
+                    {...provided.draggableProps}
                     {...provided.dragHandleProps}
                   >
                     <div
