@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form";
 
 import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
+import { Loader2, PlusCircle } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -78,8 +78,19 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
     }
   };
 
+  const onEdit = (id: string) => {
+    router.push(`/teacher/courses/${courseId}/chapters/${id}`);
+  };
+
   return (
-    <div className="mt-6 border bg-slate-100 rounded-md p-4">
+    <div className="mt-6 border bg-slate-100 rounded-md p-4 relative">
+    {
+      isUpdating && (
+        <div className="absolute h-full w-full bg-slate-500/20 top-0 right-0 rounded-m flex items-center justify-center">
+          <Loader2  className="animate-spin h-6 w-6 text-sky-600"/>
+        </div>
+      )
+    }
       <div className="font-medium flex items-center justify-between">
         Course chapters
         <Button onClick={toggleCreating} variant="ghost">
@@ -130,9 +141,8 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
           )}
         >
           {!initialData.chapters.length && "No chapters"}
-
           <ChaptersList
-            onEdit={() => {}}
+            onEdit={onEdit}
             onReorder={onReorder}
             items={initialData.chapters || []}
           />
