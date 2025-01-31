@@ -37,21 +37,20 @@ export const ChaptersList = ({
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
-  
+
     const reorderedChapters = [...chapters];
     const [movedItem] = reorderedChapters.splice(result.source.index, 1);
     reorderedChapters.splice(result.destination.index, 0, movedItem);
-  
+
     setChapters(reorderedChapters);
-  
+
     const bulkUpdateData = reorderedChapters.map((chapter, index) => ({
       id: chapter.id,
       position: index,
     }));
-  
+
     onReorder(bulkUpdateData);
   };
-  
 
   if (!isMounted) {
     return null;

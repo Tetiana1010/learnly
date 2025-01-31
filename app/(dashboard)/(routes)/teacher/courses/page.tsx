@@ -5,11 +5,14 @@ const CoursesPage = () => {
   return (
     <div className="min-h-screen p-6 bg-gradient-to-b from-blue-50/40 to-white">
       <div className="max-w-3xl mx-auto text-center">
-        <h1 className="text-3xl font-bold text-slate-800">Welcome to Your Courses</h1>
+        <h1 className="text-3xl font-bold text-slate-800">
+          Welcome to Your Courses
+        </h1>
         <p className="mt-2 text-slate-600">
-          Explore and manage your courses effortlessly. Create new ones or improve existing content.
+          Explore and manage your courses effortlessly. Create new ones or
+          improve existing content.
         </p>
-        
+
         <div className="mt-6">
           <Link href="/teacher/create">
             <Button className="px-6 py-3 text-lg">New Course</Button>
@@ -25,4 +28,3 @@ const CoursesPage = () => {
 };
 
 export default CoursesPage;
-

@@ -26,7 +26,7 @@ import { Preview } from "@/components/preview";
 interface ChapterDescriptionFormProps {
   initialData: Chapter;
   courseId: string;
-  chapterId: string
+  chapterId: string;
 }
 
 const formSchema = z.object({
@@ -36,7 +36,7 @@ const formSchema = z.object({
 export const ChapterDescriptionForm = ({
   initialData,
   courseId,
-  chapterId
+  chapterId,
 }: ChapterDescriptionFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
@@ -55,7 +55,10 @@ export const ChapterDescriptionForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values);
+      await axios.patch(
+        `/api/courses/${courseId}/chapters/${chapterId}`,
+        values,
+      );
       toast.success("Chapter updated");
 
       toggleEdit();
@@ -88,11 +91,7 @@ export const ChapterDescriptionForm = ({
           )}
         >
           {!initialData.description && "No description"}
-          {initialData && (
-            <Preview
-              value={initialData.description || ""}
-            />
-          )}
+          {initialData && <Preview value={initialData.description || ""} />}
         </div>
       )}
 
@@ -108,9 +107,7 @@ export const ChapterDescriptionForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Editor
-                      {...field}
-                    />
+                    <Editor {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
