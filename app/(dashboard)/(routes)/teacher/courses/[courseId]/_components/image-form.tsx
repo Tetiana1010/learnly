@@ -2,10 +2,6 @@
 
 import * as z from "zod";
 import axios from "axios";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 
 import { Button } from "@/components/ui/button";
 import { ImageIcon, PencilIcon, PlusCircle } from "lucide-react";
@@ -14,16 +10,12 @@ import { useRouter } from "next/navigation";
 import { Course } from "@prisma/client";
 import Image from "next/image";
 import toast from "react-hot-toast";
-import ImageUpload from "@/components/image-upload";
+import { FileUpload } from "@/components/file-upload";
 
 interface ImageFormProps {
   initialData: Course;
   courseId: string;
 }
-
-const formSchema = z.object({
-  imageUrl: z.string().min(1, { message: "Image is required" }),
-});
 
 export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -32,14 +24,7 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
 
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      imageUrl: initialData?.imageUrl || "",
-    },
-  });
-
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: { imageUrl: string }) => {
     try {
       await axios.patch(`/api/courses/${courseId}`, values);
       toast.success("Course updated");
@@ -79,7 +64,7 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
             <ImageIcon className="h-10 w-10 text-slate-500" />
           </div>
         ) : (
-          <div className="relative  aspect-video mt-2">
+          <div className="relative aspect-video mt-2">
             <Image
               alt="Upload"
               fill
@@ -91,25 +76,17 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
 
       {isEditing && (
         <div>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <FormField
-                control={form.control}
-                name="imageUrl"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <ImageUpload
-                        value={field.value}
-                        onChange={field.onChange}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <Button type="submit">Save</Button>
-            </form>
-          </Form>
+          <FileUpload
+            endpoint="courseImage"
+            onChange={(url) => {
+              if (url) {
+                onSubmit({ imageUrl: url });
+              }
+            }}
+          />
+          <div className="text-xs text-muted-foreground mt-4">
+            16:9 aspect ration recommended
+          </div>
         </div>
       )}
     </div>

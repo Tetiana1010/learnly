@@ -3,11 +3,12 @@ import { redirect } from "next/navigation";
 
 import { db } from "@/lib/db";
 import Link from "next/link";
-import { ArrowBigLeft, Eye, LayoutDashboard } from "lucide-react";
+import { ArrowBigLeft, Eye, LayoutDashboard, Video } from "lucide-react";
 import { IconBadge } from "@/components/icon-badge";
 import { ChapterTitleForm } from "../_components/chapter-title-form";
 import { ChapterDescriptionForm } from "../_components/chapter-description-form";
 import { ChapterAccessForm } from "../_components/chapter-access-form copy";
+import { ChapterVideoForm } from "../../_components/chapter-video-form";
 
 const ChapterIdPage = async ({
   params,
@@ -89,6 +90,17 @@ const ChapterIdPage = async ({
               initialData={chapter}
               courseId={params.courseId}
               chapterId={params.chapterId}
+            />
+          </div>
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={Video} />
+              <h2 className="text-xl">Add a video</h2>
+            </div>
+            <ChapterVideoForm
+              initialData={chapter}
+              chapterId={params.chapterId}
+              courseId={params.courseId}
             />
           </div>
         </div>
