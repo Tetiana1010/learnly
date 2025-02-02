@@ -12,6 +12,7 @@ import { FileUpload } from "@/components/file-upload";
 import { Button } from "@/components/ui/button";
 
 import { Chapter, MuxData } from "@prisma/client";
+import MuxPlayer from "@mux/mux-player-react";
 import toast from "react-hot-toast";
 
 interface ChapterVideoFormProps {
@@ -78,7 +79,11 @@ export const ChapterVideoForm = ({
             <VideoIcon className="h-10 w-10 text-slate-500" />
           </div>
         ) : (
-          <div className="relative  aspect-video mt-2">Video uploaded</div>
+          <div className="relative  aspect-video mt-2">
+            <MuxPlayer
+              playbackId={initialData?.muxData?.playbackId || ""}
+            />
+          </div>
         ))}
 
       {isEditing && (
@@ -100,7 +105,8 @@ export const ChapterVideoForm = ({
       )}
       {initialData.videoUrl && !isEditing && (
         <div className="text-sm text-muted-foreground mt-2">
-          Videos can take a few minutes to process. Refresh the page if video is not appear.
+          Videos can take a few minutes to process. Refresh the page if video is
+          not appear.
         </div>
       )}
     </div>
