@@ -24,14 +24,16 @@ interface BannerProps extends VariantProps<typeof bannerVariants> {
 
 const iconMap = {
   warning: AlertTriangle,
-  success: CheckCheckIcon
+  success: CheckCheckIcon,
 };
 
 export const Banner = ({ label, variant }: BannerProps) => {
   const Icon = iconMap[variant || "warning"];
 
-  return <div className={cn(bannerVariants({ variant }))}>
-    <Icon className="h-4 w-4 mr-2" />
-    {label}
-  </div>;
+  return (
+    <div className={cn(bannerVariants({ variant }))}>
+      <Icon className="h-4 w-4 mr-2" />
+      {label}
+    </div>
+  );
 };
