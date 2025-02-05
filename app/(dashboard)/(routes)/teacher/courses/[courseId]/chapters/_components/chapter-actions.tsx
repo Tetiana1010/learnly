@@ -26,7 +26,9 @@ export const ChapterActions = ({
       >
         {isPublished ? "Unpublish" : "Publish"}
       </Button>
-      <Button size="sm">
+      <Button
+        size="sm"
+      >
         <TrashIcon className="h-4 w-4" />
       </Button>
     </div>
