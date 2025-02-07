@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { TrashIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { useState } from "react";
 interface ChapterActionsProps {
   disabled: boolean;
   courseId: string;
@@ -25,7 +26,9 @@ export const ChapterActions = ({
   const onDelete = async () => {
     try {
       setIsLoaded(true);
-      await axios.delete(`/api/courses/${courseId}/chapters/${chapterId}`);
+      await axios.delete(
+        `/api/courses/${courseId}/chapters/${chapterId}`
+      );
 
       toast.success("Chapter deleted successfully");
       router.refresh();
