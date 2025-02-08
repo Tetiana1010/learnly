@@ -23,32 +23,48 @@ export const ChapterActions = ({
   const router = useRouter();
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const onDelete = async () => {
+  const onClick = async () => {
     try {
       setIsLoaded(true);
-      await axios.delete(
-        `/api/courses/${courseId}/chapters/${chapterId}`
-      );
 
-      toast.success("Chapter deleted successfully");
+      if (isPublished) {
+        await axios.patch(
+          `/api/courses/${courseId}/chapters/${chapterId}/unpublish`,
+        );
+        toast.success("Chapter unpublished successfully");
+      } else {
+        await axios.patch(
+          `/api/courses/${courseId}/chapters/${chapterId}/publish`,
+        );
+        toast.success("Chapter published successfully");
+      };
+
       router.refresh();
-      router.push(`/teacher/courses/${courseId}`);
-
     } catch {
       toast.error("Something went wrong");
     } finally {
       setIsLoaded(false);
-    }
+    };
+  };
+
+  const onDelete = async () => {
+    try {
+      setIsLoaded(true);
+      await axios.delete(`/api/courses/${courseId}/chapters/${chapterId}`);
+
+      toast.success("Chapter deleted successfully");
+      router.refresh();
+      router.push(`/teacher/courses/${courseId}`);
+    } catch {
+      toast.error("Something went wrong");
+    } finally {
+      setIsLoaded(false);
+    };
   };
 
   return (
     <div className="flex items-center gap-x-w">
-      <Button
-        onClick={() => {}}
-        disabled={disabled}
-        variant="outline"
-        size="sm"
-      >
+      <Button onClick={onClick} disabled={disabled} variant="outline" size="sm">
         {isPublished ? "Unpublish" : "Publish"}
       </Button>
       <ConfirmModal onConfirm={onDelete}>

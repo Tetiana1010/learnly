@@ -37,18 +37,18 @@ export async function DELETE(
       },
     });
 
-    if(!chapter) {
+    if (!chapter) {
       return new NextResponse("Not Found", { status: 404 });
     }
 
-    if(chapter.videoUrl) {
+    if (chapter.videoUrl) {
       const existingMuxData = await db.muxData.findFirst({
         where: {
           chapterId: params.chapterId,
         },
       });
 
-      if(existingMuxData){
+      if (existingMuxData) {
         await video.assets.delete(existingMuxData.assetId);
         await db.muxData.delete({
           where: {
@@ -56,7 +56,7 @@ export async function DELETE(
           },
         });
       }
-    };
+    }
 
     const deletedChapter = await db.chapter.delete({
       where: {
@@ -68,10 +68,10 @@ export async function DELETE(
       where: {
         courseId: params.courseId,
         isPublished: true,
-      }
+      },
     });
 
-    if(!publishedChaptersInCourse.length) {
+    if (!publishedChaptersInCourse.length) {
       await db.course.update({
         where: {
           id: params.courseId,
@@ -80,7 +80,7 @@ export async function DELETE(
           isPublished: false,
         },
       });
-    };
+    }
 
     return NextResponse.json(deletedChapter);
   } catch (error) {
