@@ -24,30 +24,7 @@ export async function PATCH(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const chapter = await db.chapter.findUnique({
-      where: {
-        id: params.chapterId,
-        courseId: params.courseId,
-      },
-    });
-
-    const muxData = await db.muxData.findFirst({
-      where: {
-        chapterId: params.chapterId,
-      },
-    });
-
-    if (
-      !chapter ||
-      !muxData ||
-      !chapter.title ||
-      !chapter.description ||
-      !chapter.videoUrl
-    ) {
-      return new NextResponse("Missing required fields", { status: 400 });
-    }
-
-    const publishedChapter = await db.chapter.update({
+    const uppublishedChapter = await db.chapter.update({
       where: {
         id: params.chapterId,
         courseId: params.courseId,
@@ -57,7 +34,26 @@ export async function PATCH(
       },
     });
 
-    return NextResponse.json(publishedChapter);
+    const publishedChapterInCourse = await db.chapter.findMany({
+      where: {
+        courseId: params.courseId,
+        isPublished: true,
+      },
+    });
+
+    if (!publishedChapterInCourse.length) {
+      await db.course.update({
+        where: {
+          id: params.courseId,
+          userId,
+        },
+        data: {
+          isPublished: false,
+        },
+      });
+    }
+
+    return NextResponse.json(uppublishedChapter);
   } catch (error) {
     console.log("[COURSES_CHAPTER_ID]", error);
     return new NextResponse("Internal Error", { status: 500 });

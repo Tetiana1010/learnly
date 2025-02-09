@@ -12,7 +12,7 @@ interface ChapterActionsProps {
   courseId: string;
   chapterId: string;
   isPublished: boolean;
-};
+}
 
 export const ChapterActions = ({
   disabled,
@@ -37,14 +37,14 @@ export const ChapterActions = ({
           `/api/courses/${courseId}/chapters/${chapterId}/publish`,
         );
         toast.success("Chapter published successfully");
-      };
+      }
 
       router.refresh();
     } catch {
       toast.error("Something went wrong");
     } finally {
       setIsLoaded(false);
-    };
+    }
   };
 
   const onDelete = async () => {
@@ -59,7 +59,7 @@ export const ChapterActions = ({
       toast.error("Something went wrong");
     } finally {
       setIsLoaded(false);
-    };
+    }
   };
 
   return (
