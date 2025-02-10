@@ -1,12 +1,14 @@
 "use client";
 
 import axios from "axios";
-import { ConfirmModal } from "@/components/modals/confirm-modal";
-import { Button } from "@/components/ui/button";
-import { TrashIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+import toast from "react-hot-toast";
+import { TrashIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ConfirmModal } from "@/components/modals/confirm-modal";
+
 interface ActionsProps {
   disabled: boolean;
   courseId: string;
@@ -15,11 +17,11 @@ interface ActionsProps {
 
 export const Actions = ({ disabled, courseId, isPublished }: ActionsProps) => {
   const router = useRouter();
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onClick = async () => {
     try {
-      setIsLoaded(true);
+      setIsLoading(true);
 
       if (isPublished) {
         await axios.patch(`/api/courses/${courseId}/unpublish`);
@@ -27,19 +29,19 @@ export const Actions = ({ disabled, courseId, isPublished }: ActionsProps) => {
       } else {
         await axios.patch(`/api/courses/${courseId}/publish`);
         toast.success("Course published successfully");
-      }
+      };
 
       router.refresh();
     } catch {
       toast.error("Something went wrong");
     } finally {
-      setIsLoaded(false);
-    }
+      setIsLoading(false);
+    };
   };
 
   const onDelete = async () => {
     try {
-      setIsLoaded(true);
+      setIsLoading(true);
       await axios.delete(`/api/courses/${courseId}`);
 
       toast.success("Course deleted successfully");
@@ -48,7 +50,7 @@ export const Actions = ({ disabled, courseId, isPublished }: ActionsProps) => {
     } catch {
       toast.error("Something went wrong");
     } finally {
-      setIsLoaded(false);
+      setIsLoading(false);
     }
   };
 
@@ -58,7 +60,7 @@ export const Actions = ({ disabled, courseId, isPublished }: ActionsProps) => {
         {isPublished ? "Unpublish" : "Publish"}
       </Button>
       <ConfirmModal onConfirm={onDelete}>
-        <Button size="sm" disabled={isLoaded}>
+        <Button size="sm" disabled={isLoading}>
           <TrashIcon className="h-4 w-4" />
         </Button>
       </ConfirmModal>
