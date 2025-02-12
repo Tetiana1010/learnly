@@ -32,8 +32,9 @@ export const Actions = ({ disabled, courseId, isPublished }: ActionsProps) => {
       };
 
       router.refresh();
-    } catch {
+    } catch (error){
       toast.error("Something went wrong");
+      console.error("[COURSE_ID PATCH ERROR]", error);
     } finally {
       setIsLoading(false);
     };
