@@ -1,7 +1,27 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { columns } from "./_components/columns";
+import { DataTable } from "./_components/data-table";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+import { db } from "@/lib/db";
 
-const CoursesPage = () => {
+const CoursesPage = async () => {
+  const { userId } = await auth();
+
+  if(!userId) {
+    return redirect('/');
+  };
+
+  const courses = await db.course.findMany({
+    where: {
+      userId
+    },
+    orderBy: {
+      createdAt: "desc"
+    }
+  });
+
   return (
     <div className="min-h-screen p-6 bg-gradient-to-b from-blue-50/40 to-white">
       <div className="max-w-3xl mx-auto text-center">
@@ -18,6 +38,8 @@ const CoursesPage = () => {
             <Button className="px-6 py-3 text-lg">New Course</Button>
           </Link>
         </div>
+
+        <DataTable columns={columns} data={courses} />
 
         <div className="mt-12 flex justify-center">
           <div className="w-48 h-48 bg-blue-50 rounded-full blur-3xl opacity-30" />
