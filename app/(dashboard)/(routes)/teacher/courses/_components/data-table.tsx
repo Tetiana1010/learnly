@@ -19,9 +19,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
@@ -46,7 +45,7 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <div>
+    <div className="py-6">
       <div className="rounded-md border">
         <Table>
           <TableHeader>
