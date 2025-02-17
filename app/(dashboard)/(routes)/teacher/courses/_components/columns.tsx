@@ -13,6 +13,8 @@ import {
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 export const columns: ColumnDef<Course>[] = [
   {
@@ -55,6 +57,18 @@ export const columns: ColumnDef<Course>[] = [
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
+    },
+    cell: ({ row }) => {
+      const isPublished = row.getValue("isPublished") || false;
+
+      return (
+        <Badge className={cn(
+          "bg-slate-500",
+          isPublished && "bg-sky-500"
+        )}>
+          {isPublished ? "Published" : "Draft"}
+        </Badge>
+      )
     }
   },
   {
