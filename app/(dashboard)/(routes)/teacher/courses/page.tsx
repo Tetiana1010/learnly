@@ -9,17 +9,17 @@ import { db } from "@/lib/db";
 const CoursesPage = async () => {
   const { userId } = await auth();
 
-  if(!userId) {
-    return redirect('/');
-  };
+  if (!userId) {
+    return redirect("/");
+  }
 
   const courses = await db.course.findMany({
     where: {
-      userId
+      userId,
     },
     orderBy: {
-      createdAt: "desc"
-    }
+      createdAt: "desc",
+    },
   });
 
   return (

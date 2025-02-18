@@ -32,15 +32,15 @@ export const Actions = ({ disabled, courseId, isPublished }: ActionsProps) => {
         await axios.patch(`/api/courses/${courseId}/publish`);
         toast.success("Course published successfully");
         confetti.onOpen();
-      };
+      }
 
       router.refresh();
-    } catch (error){
+    } catch (error) {
       toast.error("Something went wrong");
       console.error("[COURSE_ID PATCH ERROR]", error);
     } finally {
       setIsLoading(false);
-    };
+    }
   };
 
   const onDelete = async () => {

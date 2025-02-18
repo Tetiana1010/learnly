@@ -44,7 +44,9 @@ export async function DELETE(
           await video.assets.delete(chapter.muxData.assetId);
         } catch (muxError) {
           if (muxError instanceof APIError && muxError.status === 404) {
-            console.error(`Mux asset with ID ${chapter.muxData.assetId} not found`);
+            console.error(
+              `Mux asset with ID ${chapter.muxData.assetId} not found`,
+            );
           } else {
             throw muxError;
           }
@@ -95,4 +97,4 @@ export async function PATCH(
     console.log("[COURSE_ID]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
-};
+}

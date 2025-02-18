@@ -8,7 +8,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 import { Button } from "@/components/ui/button";
@@ -29,7 +29,7 @@ export const columns: ColumnDef<Course>[] = [
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
-    }
+    },
   },
   {
     accessorKey: "price",
@@ -43,7 +43,16 @@ export const columns: ColumnDef<Course>[] = [
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
-    }
+    },
+    cell: ({ row }) => {
+      const price = parseFloat(row.getValue("price")) || 0;
+      const formattedPrice = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(price);
+
+      return <div>{formattedPrice}</div>;
+    },
   },
   {
     accessorKey: "isPublished",
@@ -62,14 +71,11 @@ export const columns: ColumnDef<Course>[] = [
       const isPublished = row.getValue("isPublished") || false;
 
       return (
-        <Badge className={cn(
-          "bg-slate-500",
-          isPublished && "bg-sky-500"
-        )}>
+        <Badge className={cn("bg-slate-500", isPublished && "bg-sky-500")}>
           {isPublished ? "Published" : "Draft"}
         </Badge>
-      )
-    }
+      );
+    },
   },
   {
     id: "actions",
@@ -81,19 +87,19 @@ export const columns: ColumnDef<Course>[] = [
           <DropdownMenuTrigger>
             <div>
               <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4"/>
+              <MoreHorizontal className="h-4 w-4" />
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <Link href={`/teacher/courses/${id}`}>
               <DropdownMenuItem>
-                <Pencil className="h-4 w-4 mr-2"/>
+                <Pencil className="h-4 w-4 mr-2" />
                 Edit
               </DropdownMenuItem>
             </Link>
           </DropdownMenuContent>
         </DropdownMenu>
-      )
-    }
-  }
+      );
+    },
+  },
 ];
