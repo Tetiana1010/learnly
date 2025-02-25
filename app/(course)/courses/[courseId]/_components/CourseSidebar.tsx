@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
 import { Chapter, Course, UserProgress } from "@prisma/client";
 import { redirect } from "next/navigation";
+import { CourseSidebarItem } from "./CourseSidebarItem";
 
 interface CourseSidebarProps {
   course: Course & {
@@ -42,7 +43,7 @@ export const CourseSidebar = async ({
             key={chapter.id}
             id={chapter.id}
             label={chapter.title}
-            idCompleted={!!chapter.userProgress?.[0]?.isCompleted}
+            isCompleted={!!chapter.userProgress?.[0]?.isCompleted}
             courseId={chapter.id}
             isLocked={!chapter.isFree && !purchase}
           />
