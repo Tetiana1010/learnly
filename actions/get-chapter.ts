@@ -41,8 +41,59 @@ export const getChapter = async ({
 
     if (!chapter || !course) {
       throw new Error("Chapter or course not found");
-    };
+    }
 
+    let muxData = null;
+    let attachments: Attachment[] = [];
+    let nextChapter: Chapter | null = null;
+
+    if (purchase) {
+      attachments = await db.attachment.findMany({
+        where: {
+          courseId: courseId,
+        },
+      });
+    }
+
+    if (chapter.isFree || purchase) {
+      muxData = await db.muxData.findUnique({
+        where: {
+          chapterId: chapterId,
+        },
+      });
+
+      nextChapter = await db.chapter.findFirst({
+        where: {
+          courseId: courseId,
+          isPublished: true,
+          position: {
+            gt: chapter?.position,
+          },
+        },
+        orderBy: {
+          position: "asc",
+        },
+      });
+    }
+
+    const userProgress = await db.userProgress.findUnique({
+      where: {
+        userId_chapterId: {
+          userId,
+          chapterId,
+        },
+      },
+    });
+
+    return {
+      chapter,
+      course,
+      muxData,
+      attachments,
+      nextChapter,
+      userProgress,
+      purchase,
+    };
   } catch (error) {
     console.log("[GET_CHAPTER]", error);
 
