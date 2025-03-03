@@ -47,9 +47,7 @@ export const VideoPlayer = ({
       {!isLocked && (
         <MuxPlayer
           title={title}
-          className={
-            cn(!isReady && "hidden")
-          }
+          className={cn(!isReady && "hidden")}
           onCanPlay={() => setIsReady(true)}
           onEnded={(evt: Event) => {
             console.log("Video ended", evt);

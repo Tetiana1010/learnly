@@ -62,6 +62,10 @@ export const getChapter = async ({
         },
       });
 
+      if (!muxData) {
+        throw new Error("Mux data not found for the chapter");
+      }
+
       nextChapter = await db.chapter.findFirst({
         where: {
           courseId: courseId,
